@@ -1,0 +1,32 @@
+{
+  "name": "voting_for_eric",
+  "version": "1.0.0",
+  "description": "voting dApp to support Eric's recruitment",
+  "main": "index.js",
+  "dependencies": {
+    "ganache-cli": "^6.1.8",
+    "web3": "^1.0.0-beta.36"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricBoutueil/voting_for_eric.git"
+  },
+  "keywords": [
+    "eric",
+    "dapp",
+    "voting",
+    "ethereum",
+    "blockchain",
+    "smartcontract"
+  ],
+  "author": "Eric Boutueil",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/EricBoutueil/voting_for_eric/issues"
+  },
+  "homepage": "https://github.com/EricBoutueil/voting_for_eric#readme"
+}
