@@ -112,7 +112,7 @@ const abi = [
   }
 ]
 
-const contractAddress = '0x08970fed061e7747cd9a38d680a601510cb659fb'
+const contractAddress = '0x085b7dc071a83c994d33ec7b1c55a7f6c7ca61d3'
 
 const VotingForEricContract = new web3.eth.contract(abi);
 const contractInstance = VotingForEricContract.at(contractAddress);
