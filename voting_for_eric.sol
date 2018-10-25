@@ -6,7 +6,7 @@ contract VotingForEric {
 
   bytes32[] public candidateList;
 
-  constructor(bytes32[] Erics) public {
+  function VotingForEric(bytes32[] Erics) public {
     candidateList = Erics;
   }
 

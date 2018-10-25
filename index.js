@@ -1,152 +1,47 @@
-// if (typeof web3 !== 'undefined') {
-//   const web3 = new Web3(web3.currentProvider);
-// } else {
-  const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-// }
+if (typeof web3 !== 'undefined') {
+  var web3 = new Web3(web3.currentProvider);
+} else {
+  console.log("MetaMask is NOT working (properly)")
+  var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+}
 
 // web3.eth.defaultAccount = web3.eth.getAccounts().then(result => {
-//   let firstAccount=result[0]
+//   var firstAccount=result[0]
 // });
 
-const abi = [
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "candidate",
-        "type": "bytes32"
-      }
-    ],
-    "name": "voteForCandidate",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "name": "Erics",
-        "type": "bytes32[]"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "candidateList",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "candidate",
-        "type": "bytes32"
-      }
-    ],
-    "name": "totalVotesFor",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "candidate",
-        "type": "bytes32"
-      }
-    ],
-    "name": "validCandidate",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "name": "votesReceived",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint8"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  }
-]
+var contractAddress = '0xfea09a7c6f6e923b1bda343fdc0eddbe0de9618c'
 
-const contractAddress = '0x085b7dc071a83c994d33ec7b1c55a7f6c7ca61d3'
-
-const VotingForEricContract = new web3.eth.contract(abi);
-const contractInstance = VotingForEricContract.at(contractAddress);
+var VotingForEricContract = web3.eth.contract(voting_for_eric_abi);
+var contractInstance = VotingForEricContract.at(contractAddress);
 
 console.log(contractInstance)
 
-const candidates = {"Eric B": "candidate-1", "E B": "candidate-2", "E Boutueil": "candidate-3"}
+var candidates = {"Eric B": "candidate-1", "Eric Boutueil": "candidate-2", "E Boutueil": "candidate-3"}
 
-// function voteForCandidate() {
-//   candidateName = $("#candidate").val();
-//   contractInstance.voteForCandidate(candidateName, {from: '0x147e02dA5E0691180A3b2C0f2C4381D1fF5F4205'}, function() {
-//     let div_id = candidates[candidateName];
-//     $("#" + div_id).html(contractInstance.totalVotesFor.call(candidateName).toString());
-//   });
+function voteForCandidate() {
+  var candidateName = $("#candidate").val();
+  contractInstance.voteForCandidate(candidateName, {from: '0x93f07a160eBAc98A5f1Ee420A9E6970DA0A48E95'}, function() {
+    var div_id = candidates[candidateName];
+    $("#candidate-" + div_id).html(contractInstance.methods.totalVotesFor(candidateName).send({}).toString());
+  });
+}
+
+// function totalVotesFor(candidateName) {
+//   var div_id = candidates[candidateName];
+//   $("#candidate-" + div_id).html(contractInstance.methods.totalVotesFor(candidateName).send({}).toString());
 // }
 
-let candidateName
-
-function totalVotesFor(candidateName) {
-  let div_id = candidates[candidateName];
-  $("#candidate-" + div_id).html(contractInstance.methods.totalVotesFor(candidateName).send({}).toString());
-}
-
-function voteForCandidate(totalVotesFor) {
-  candidateName = $("#candidate").val();
-  contractInstance.methods.voteForCandidate(candidateName).send({});
-  totalVotesFor(candidateName);
-}
+// function voteForCandidate(totalVotesFor) {
+//   var candidateName = $("#candidate").val();
+//   contractInstance.methods.voteForCandidate(candidateName).send({});
+//   totalVotesFor(candidateName);
+// }
 
 $(document).ready(function() {
   Erics = Object.keys(candidates);
   for (var i = 0; i < Erics.length; i++) {
-    let name = Erics[i];
-    let val = contractInstance.methods.totalVotesFor(name).send({}).toString()
+    var name = Erics[i];
+    var val = contractInstance.methods.totalVotesFor(name).send({}).toString()
     $("#candidate-" + candidates[name]).html(val);
   }
 });
